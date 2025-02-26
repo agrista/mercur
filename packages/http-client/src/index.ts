@@ -1398,7 +1398,7 @@ export interface AdminCreateProduct {
    * shipping_profile_id
    * The ID of the product's shipping profile.
    */
-  shipping_profile_id: string;
+  shipping_profile_id?: string;
 }
 
 /** The product category's details. */
@@ -2710,9 +2710,247 @@ export interface AdminDeletePaymentCollectionResponse {
 }
 
 /** The draft order's details. */
+export interface AdminDraftOrder {
+  /** The draft order's payment collections. */
+  payment_collections: AdminPaymentCollection[];
+  /** The draft order's fulfillments. */
+  fulfillments?: AdminOrderFulfillment[];
+  /** The sales channel's details. */
+  sales_channel?: AdminSalesChannel;
+  /** The customer's details. */
+  customer?: AdminCustomer;
+  /** An order address. */
+  shipping_address?: AdminOrderAddress;
+  /** An order address. */
+  billing_address?: AdminOrderAddress;
+  /** The draft order's items. */
+  items: AdminOrderLineItem[];
+  /** The draft order's shipping methods. */
+  shipping_methods: AdminOrderShippingMethod[];
+  /**
+   * status
+   * The draft order's status.
+   */
+  status: string;
+  /**
+   * currency_code
+   * The draft order's currency code.
+   * @example "usd"
+   */
+  currency_code: string;
+  /**
+   * id
+   * The draft order's ID.
+   */
+  id: string;
+  /**
+   * version
+   * The draft order's version.
+   */
+  version: number;
+  /**
+   * region_id
+   * The ID of the region associated with the draft order.
+   */
+  region_id: string;
+  /**
+   * customer_id
+   * The ID of the customer that the draft order belongs to.
+   */
+  customer_id: string;
+  /**
+   * sales_channel_id
+   * The ID of the sales channel that the draft order is placed in.
+   */
+  sales_channel_id: string;
+  /**
+   * email
+   * The customer email associated with the draft order.
+   * @format email
+   */
+  email: string;
+  /**
+   * display_id
+   * The draft order's display ID.
+   */
+  display_id?: number;
+  /** The draft order's payment status. */
+  payment_status:
+    | "not_paid"
+    | "awaiting"
+    | "authorized"
+    | "partially_authorized"
+    | "canceled"
+    | "captured"
+    | "partially_captured"
+    | "partially_refunded"
+    | "refunded"
+    | "requires_action";
+  /** The draft order's fulfillment status. */
+  fulfillment_status:
+    | "canceled"
+    | "not_fulfilled"
+    | "partially_fulfilled"
+    | "fulfilled"
+    | "partially_shipped"
+    | "shipped"
+    | "partially_delivered"
+    | "delivered";
+  /** The draft order's transactions. */
+  transactions?: BaseOrderTransaction[];
+  /** The order's summary details. */
+  summary: BaseOrderSummary;
+  /** The draft order's metadata, can hold custom key-value pairs. */
+  metadata?: object;
+  /**
+   * created_at
+   * The date the draft order was created.
+   * @format date-time
+   */
+  created_at: string;
+  /**
+   * updated_at
+   * The date the draft order was updated.
+   * @format date-time
+   */
+  updated_at: string;
+  /**
+   * original_item_total
+   * The total of the draft order's items including taxes, excluding promotions.
+   */
+  original_item_total: number;
+  /**
+   * original_item_subtotal
+   * The total of the draft order's items excluding taxes, including promotions.
+   */
+  original_item_subtotal: number;
+  /**
+   * original_item_tax_total
+   * The tax total of the draft order's items excluding promotions.
+   */
+  original_item_tax_total: number;
+  /**
+   * item_total
+   * The total of the draft order's items including taxes and promotions.
+   */
+  item_total: number;
+  /**
+   * item_subtotal
+   * The total of the draft order's items excluding taxes, including promotions.
+   */
+  item_subtotal: number;
+  /**
+   * item_tax_total
+   * The tax total of the draft order's items including promotions.
+   */
+  item_tax_total: number;
+  /**
+   * original_total
+   * The draft order's total excluding promotions, including taxes.
+   */
+  original_total: number;
+  /**
+   * original_subtotal
+   * The draft order's total excluding taxes, including promotions.
+   */
+  original_subtotal: number;
+  /**
+   * original_tax_total
+   * The draft order's tax total, excluding promotions.
+   */
+  original_tax_total: number;
+  /**
+   * total
+   * The draft order's total including taxes and promotions.
+   */
+  total: number;
+  /**
+   * subtotal
+   * The draft order's total excluding taxes, including promotions.
+   */
+  subtotal: number;
+  /**
+   * tax_total
+   * The draft order's tax total including promotions.
+   */
+  tax_total: number;
+  /**
+   * discount_total
+   * The draft order's discount or promotions total.
+   */
+  discount_total: number;
+  /**
+   * discount_tax_total
+   * The tax total of draft order's discount or promotion.
+   */
+  discount_tax_total: number;
+  /**
+   * gift_card_total
+   * The draft order's gift card total.
+   */
+  gift_card_total: number;
+  /**
+   * gift_card_tax_total
+   * The tax total of the draft order's gift card.
+   */
+  gift_card_tax_total: number;
+  /**
+   * shipping_total
+   * The draft order's shipping total including taxes and promotions.
+   */
+  shipping_total: number;
+  /**
+   * shipping_subtotal
+   * The draft order's shipping total excluding taxes, including promotions.
+   */
+  shipping_subtotal: number;
+  /**
+   * shipping_tax_total
+   * The tax total of the draft order's shipping.
+   */
+  shipping_tax_total: number;
+  /**
+   * original_shipping_total
+   * The draft order's shipping total including taxes, excluding promotions.
+   */
+  original_shipping_total: number;
+  /**
+   * original_shipping_subtotal
+   * The draft order's shipping total excluding taxes, including promotions.
+   */
+  original_shipping_subtotal: number;
+  /**
+   * original_shipping_tax_total
+   * The tax total of the draft order's shipping excluding promotions.
+   */
+  original_shipping_tax_total: number;
+}
+
+/** The list of draft orders with pagination fields. */
+export interface AdminDraftOrderListResponse {
+  /**
+   * limit
+   * The maximum number of items retrieved.
+   */
+  limit: number;
+  /**
+   * offset
+   * The number of items skipped before retrieving the returned items.
+   */
+  offset: number;
+  /**
+   * count
+   * The total count of items available.
+   */
+  count: number;
+  /** The list of draft orders. */
+  draft_orders: AdminDraftOrder[];
+}
+
+/** The draft order's details. */
 export interface AdminDraftOrderResponse {
-  /** The order's details. */
-  draft_order: AdminOrder;
+  /** The draft order's details. */
+  draft_order: AdminDraftOrder;
 }
 
 /** The exchange's details. */
@@ -8834,6 +9072,130 @@ export interface AdminUpdateCustomerGroup {
   metadata?: object;
 }
 
+/** The data to update in the draft order. */
+export interface AdminUpdateDraftOrder {
+  /**
+   * email
+   * The customer email associated with the draft order.
+   * @format email
+   */
+  email?: string;
+  /** The draft order's shipping address. */
+  shipping_address?: {
+    /**
+     * first_name
+     * The shipping address's first name.
+     */
+    first_name?: string;
+    /**
+     * last_name
+     * The shipping address's last name.
+     */
+    last_name?: string;
+    /**
+     * phone
+     * The shipping address's phone.
+     */
+    phone?: string;
+    /**
+     * company
+     * The shipping address's company.
+     */
+    company?: string;
+    /**
+     * address_1
+     * The first address line.
+     */
+    address_1?: string;
+    /**
+     * address_2
+     * The second address line.
+     */
+    address_2?: string;
+    /**
+     * city
+     * The shipping address's city.
+     */
+    city?: string;
+    /**
+     * country_code
+     * The shipping address's country code.
+     * @example "us"
+     */
+    country_code?: string;
+    /**
+     * province
+     * The shipping address's province.
+     */
+    province?: string;
+    /**
+     * postal_code
+     * The shipping address's postal code.
+     */
+    postal_code?: string;
+    /** The shipping address's metadata, can hold custom key-value pairs. */
+    metadata?: object;
+  };
+  /** The draft order's billing address. */
+  billing_address?: {
+    /**
+     * first_name
+     * The billing address's first name.
+     */
+    first_name?: string;
+    /**
+     * last_name
+     * The billing address's last name.
+     */
+    last_name?: string;
+    /**
+     * phone
+     * The billing address's phone.
+     */
+    phone?: string;
+    /**
+     * company
+     * The billing address's company.
+     */
+    company?: string;
+    /**
+     * address_1
+     * The first address line.
+     */
+    address_1?: string;
+    /**
+     * address_2
+     * The second address line.
+     */
+    address_2?: string;
+    /**
+     * city
+     * The billing address's city.
+     */
+    city?: string;
+    /**
+     * country_code
+     * The billing address's country code.
+     * @example "us"
+     */
+    country_code?: string;
+    /**
+     * province
+     * The billing address's province.
+     */
+    province?: string;
+    /**
+     * postal_code
+     * The billing address's postal code.
+     */
+    postal_code?: string;
+    /** The billing address's metadata, can hold custom key-value pairs. */
+    metadata?: object;
+  };
+  /** The draft order's metadata, can hold custom key-value pairs. */
+  metadata?: object;
+}
+
 /** The details to update in the order. */
 export interface AdminUpdateOrder {
   /**
@@ -11769,46 +12131,6 @@ export interface BaseOrderShippingMethodTaxLine {
 /** The order's summary details. */
 export interface BaseOrderSummary {
   /**
-   * total
-   * The order's total including taxes and promotions.
-   */
-  total: number;
-  /**
-   * subtotal
-   * The order's total excluding taxes, including promotions.
-   */
-  subtotal: number;
-  /**
-   * total_tax
-   * The order's total taxes.
-   */
-  total_tax: number;
-  /**
-   * ordered_total
-   * The order's total when it was placed.
-   */
-  ordered_total: number;
-  /**
-   * fulfilled_total
-   * The total of the fulfilled items of the order.
-   */
-  fulfilled_total: number;
-  /**
-   * returned_total
-   * The total of the order's returned items.
-   */
-  returned_total: number;
-  /**
-   * return_request_total
-   * The total of the items requested to be returned.
-   */
-  return_request_total: number;
-  /**
-   * write_off_total
-   * The total of the items removed from the order.
-   */
-  write_off_total: number;
-  /**
    * paid_total
    * The total amount paid.
    */
@@ -11818,6 +12140,31 @@ export interface BaseOrderSummary {
    * The total amount refunded.
    */
   refunded_total: number;
+  /**
+   * pending_difference
+   * The difference pending to be processed. If negative, the customer needs a refund. Otherwise, additional payment is required from the customer.
+   */
+  pending_difference: number;
+  /**
+   * current_order_total
+   * The order's current total, could be the total after a change in the order.
+   */
+  current_order_total: number;
+  /**
+   * original_order_total
+   * The order's original total.
+   */
+  original_order_total: number;
+  /**
+   * transaction_total
+   * The total of the transactions made on the order.
+   */
+  transaction_total: number;
+  /**
+   * accounting_total
+   * The order's total without the credit-line total.
+   */
+  accounting_total: number;
 }
 
 /** An order transaction's details. */
@@ -11993,7 +12340,7 @@ export interface BasePaymentCollection {
   /** The payment collection's metadata, can hold custom key-value pairs. */
   metadata?: object;
   /** The payment collection's status. */
-  status: "canceled" | "not_paid" | "awaiting" | "authorized" | "partially_authorized";
+  status: "canceled" | "not_paid" | "awaiting" | "authorized" | "partially_authorized" | "completed" | "failed";
   /** The payment provider used to process the collection's payments and sessions. */
   payment_providers: BasePaymentProvider[];
   /** The payment collection's payment sessions. */
@@ -12042,7 +12389,7 @@ export interface BasePaymentSession {
    */
   context?: object;
   /** The payment session's status. */
-  status: "authorized" | "captured" | "canceled" | "pending" | "requires_more" | "error";
+  status: "error" | "authorized" | "canceled" | "captured" | "pending" | "requires_more";
   /**
    * authorized_at
    * The date the payment session was authorized.
@@ -14671,6 +15018,11 @@ export interface OrderTransaction {
    */
   updated_at: string;
   order: object;
+  /**
+   * version
+   * The order version that the transaction belongs to.
+   */
+  version: number;
 }
 
 /** The refund reason's details. */
@@ -15887,6 +16239,11 @@ export interface StoreCartShippingOption {
   prices: StorePrice[];
   /** The shipping option's calculated price. */
   calculated_price: StoreCalculatedPrice;
+  /**
+   * insufficient_inventory
+   * Whether the shipping option's location doesn't have sufficient quantity for any of the cart's items.
+   */
+  insufficient_inventory: boolean;
 }
 
 /** The collection's details. */
@@ -23921,6 +24278,16 @@ export interface VendorCreateSeller {
   description?: string | null;
   /** URL to the seller's photo. */
   photo?: string | null;
+  /** Seller address line. */
+  address_line?: string | null;
+  /** Seller postal code. */
+  postal_code?: string | null;
+  /** Seller city. */
+  city?: string | null;
+  /** Seller country code. */
+  country_code?: string | null;
+  /** Seller tax id. */
+  tax_id?: string | null;
   member: {
     /** The name of the member. */
     name: string;
@@ -25725,8 +26092,47 @@ export interface VendorSeller {
   handle: string;
   /** URL to the seller's photo. */
   photo?: string | null;
+  /** Seller address line. */
+  address_line?: string | null;
+  /** Seller postal code. */
+  postal_code?: string | null;
+  /** Seller city. */
+  city?: string | null;
+  /** Seller country code. */
+  country_code?: string | null;
+  /** Seller tax id. */
+  tax_id?: string | null;
   /** The members associated with the seller. */
   members?: VendorMember[];
+}
+
+/**
+ * SellerOnboarding
+ * An onboarding object with its properties
+ */
+export interface VendorSellerOnboarding {
+  /** The unique identifier of the onboarding. */
+  id: string;
+  /**
+   * The date with timezone at which the resource was created.
+   * @format date-time
+   */
+  created_at: string;
+  /**
+   * The date with timezone at which the resource was last updated.
+   * @format date-time
+   */
+  updated_at: string;
+  /** The unique identifier of the seller. */
+  seller_id?: string;
+  /** Indicates if seller completed store information. */
+  store_information?: boolean;
+  /** Indicates if seller completed stripe connection. */
+  stripe_connection?: boolean;
+  /** Indicates if seller added shipping locations. */
+  locations_shipping?: boolean;
+  /** Indicates if seller added products. */
+  products?: boolean;
 }
 
 /** The shipping option's service zone. */
@@ -26122,6 +26528,16 @@ export interface VendorUpdateSeller {
   description?: string | null;
   /** URL to the seller's photo. */
   photo?: string | null;
+  /** Seller address line. */
+  address_line?: string | null;
+  /** Seller postal code. */
+  postal_code?: string | null;
+  /** Seller city. */
+  city?: string | null;
+  /** Seller country code. */
+  country_code?: string | null;
+  /** Seller tax id. */
+  tax_id?: string | null;
 }
 
 export interface VendorUpdateServiceZone {
@@ -33512,29 +33928,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<
-        {
-          /**
-           * limit
-           * The maximum number of items returned.
-           */
-          limit: number;
-          /**
-           * offset
-           * The number of items skipped before retrieving the returned items.
-           */
-          offset: number;
-          /**
-           * count
-           * The total number of items.
-           */
-          count: number;
-        } & {
-          /** The order's details. */
-          draft_orders: AdminOrder;
-        },
-        Error | string
-      >({
+      this.request<AdminDraftOrderListResponse, Error | string>({
         path: `/admin/draft-orders`,
         method: "GET",
         query: query,
@@ -33819,11 +34213,54 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/admin/draft-orders/{id}
      * @secure
      */
-    adminGetDraftOrdersId: (id: string, params: RequestParams = {}) =>
+    adminGetDraftOrdersId: (
+      id: string,
+      query?: {
+        /**
+         * fields
+         * Comma-separated fields that should be included in the returned data. If a field is prefixed with `+` it will be added to the default fields, using `-` will remove it from the default fields. Without prefix it will replace the entire default fields.
+         */
+        fields?: string;
+      },
+      params: RequestParams = {},
+    ) =>
       this.request<AdminDraftOrderResponse, Error | string>({
         path: `/admin/draft-orders/${id}`,
         method: "GET",
+        query: query,
         secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Update a draft order's details.
+     *
+     * @tags Admin Draft Orders
+     * @name AdminPostDraftOrdersId
+     * @summary Update a Draft Order
+     * @request POST:/admin/draft-orders/{id}
+     * @secure
+     */
+    adminPostDraftOrdersId: (
+      id: string,
+      data: AdminUpdateDraftOrder,
+      query?: {
+        /**
+         * fields
+         * Comma-separated fields that should be included in the returned data. If a field is prefixed with `+` it will be added to the default fields, using `-` will remove it from the default fields. Without prefix it will replace the entire default fields.
+         */
+        fields?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<AdminDraftOrderResponse, Error | string>({
+        path: `/admin/draft-orders/${id}`,
+        method: "POST",
+        query: query,
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         format: "json",
         ...params,
       }),
@@ -56486,6 +56923,54 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Retrieves the onboarding details of the current authenticated seller.
+     *
+     * @tags Seller, Onboarding
+     * @name VendorGetOnboardingStatus
+     * @summary Get onboarding status of the current seller
+     * @request GET:/vendor/sellers/me/onboarding
+     * @secure
+     */
+    vendorGetOnboardingStatus: (params: RequestParams = {}) =>
+      this.request<
+        {
+          /** An onboarding object with its properties */
+          product?: VendorSellerOnboarding;
+        },
+        any
+      >({
+        path: `/vendor/sellers/me/onboarding`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * @description Triggers onboarding status recalculation and retrieves the onboarding details of the current authenticated seller.
+     *
+     * @tags Seller, Onboarding
+     * @name VendorRecalculateOnboardingStatus
+     * @summary Recalculates onboarding status
+     * @request POST:/vendor/sellers/me/onboarding
+     * @secure
+     */
+    vendorRecalculateOnboardingStatus: (params: RequestParams = {}) =>
+      this.request<
+        {
+          /** An onboarding object with its properties */
+          product?: VendorSellerOnboarding;
+        },
+        any
+      >({
+        path: `/vendor/sellers/me/onboarding`,
+        method: "POST",
+        secure: true,
         format: "json",
         ...params,
       }),
