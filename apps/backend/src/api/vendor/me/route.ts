@@ -3,7 +3,7 @@ import { MedusaResponse } from '@medusajs/framework'
 import { ContainerRegistrationKeys } from '@medusajs/framework/utils'
 
 /**
- * @oas [get] /vendor/members/me
+ * @oas [get] /vendor/me
  * operationId: "VendorGetMemberMe"
  * summary: "Get Current Member"
  * description: "Retrieves the member associated with the authenticated user."
@@ -35,7 +35,7 @@ export const GET = async (
   } = await query.graph(
     {
       entity: 'member',
-      fields: req.remoteQueryConfig.fields,
+      fields: req.queryConfig.fields,
       filters: { id: req.auth_context.actor_id }
     },
     { throwIfKeyNotFound: true }

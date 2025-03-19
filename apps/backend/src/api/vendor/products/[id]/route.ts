@@ -61,7 +61,7 @@ export const GET = async (
   } = await query.graph(
     {
       entity: 'product',
-      fields: req.remoteQueryConfig.fields,
+      fields: req.queryConfig.fields,
       filters: { id: req.params.id }
     },
     { throwIfKeyNotFound: true }
@@ -121,7 +121,8 @@ export const POST = async (
   const { result } = await updateProductsWorkflow(req.scope).run({
     input: {
       // @ts-expect-error: updateProductsWorkflow does not support null values
-      products: [req.validatedBody]
+      update: req.validatedBody,
+      selector: { id: req.params.id }
     }
   })
 
@@ -130,7 +131,7 @@ export const POST = async (
   } = await query.graph(
     {
       entity: 'product',
-      fields: req.remoteQueryConfig.fields,
+      fields: req.queryConfig.fields,
       filters: { id: result[0].id }
     },
     { throwIfKeyNotFound: true }
